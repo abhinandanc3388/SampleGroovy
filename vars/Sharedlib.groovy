@@ -19,6 +19,13 @@ def call(names){
 
     echo "${flag}"
 
+
+
+  def runningBuilds =  Jenkins.instance.getView('All').getBuilds().findAll(){
+        it.getResult().equals(null)
+    }
+
+    echo "${runningBuilds}"
 }
 
 
