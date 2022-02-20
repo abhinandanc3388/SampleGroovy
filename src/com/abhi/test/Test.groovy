@@ -1,72 +1,18 @@
 package com.abhi.test
 
-pipeline {
-    agent any
+import java.time.DayOfWeek
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.Month
+import java.time.temporal.TemporalAdjuster
+import java.time.temporal.TemporalAdjusters
 
-    environment {
-        name = 'Abhinandan'
-    }
 
-    parameters {
-        string(name: 'City', defaultValue: 'pune', description: "Enter your City name" )
-        booleanParam(name: 'isMale', defaultValue: 'true', description: "Enter your gender" )
-        choice(name: 'FavCity', choices:['pune','mumbai','delhi'],description: "select your fav City")
-    }
+def flag=false
 
-    stages {
-        stage('Test') {
-            steps {
-                echo 'Hello World'
-            }
-        }
-        stage('windows bat command run') {
+def currDate = LocalDate.now()
+def thirdDay = currDate.with(TemporalAdjusters.dayOfWeekInMonth(3, DayOfWeek.SUNDAY));
 
-            environment{
-                name = 'ram'
-            }
-
-            steps {
-                bat '''dir'''
-                bat 'echo  "%name%"'
-            }
-        }
-        stage('Jenkins Environment variable') {
-            steps {
-                bat 'echo  "%BUILD_ID%"'
-                bat 'echo  "%name%"'
-            }
-        }
-        stage('take paramter from User') {
-            steps {
-                bat 'echo  "%City%"'
-
-            }
-        }
-        stage('continue ?') {
-
-            input{
-                message "Should we continue ?"
-                ok "Yes we should"
-            }
-
-            steps {
-                bat 'echo  "%City%"'
-
-            }
-        }
-
-    }
-    post{
-        always{
-
-            echo 'it is like finally block'
-
-        }
-        failure{
-            echo 'after successful'
-        }
-        success{
-            echo 'after failure'
-        }
-    }
+if (currDate.equals(thirdDay)){
+    flag = true
 }

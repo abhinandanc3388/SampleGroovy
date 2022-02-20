@@ -1,5 +1,60 @@
 package com.abhi.test
 
+import java.time.LocalDateTime
+import java.time.Month
+import java.time.temporal.TemporalAdjusters
+
+
+def flag=false
+
+def currDate = LocalDate.now()
+def thirdDay = currDate.with(TemporalAdjusters.dayOfWeekInMonth(3, DayOfWeek.SUNDAY));
+
+if (currDate.equals(thirdDay)){
+    flag = true
+}
+
+if (flag = true){
+
+    pipeline{
+        agent{
+            label "node"
+        }
+        stages{
+            stage("A"){
+                steps{
+                    echo "========executing A========"
+                }
+                post{
+                    always{
+                        echo "========always========"
+                    }
+                    success{
+                        echo "========A executed successfully========"
+                    }
+                    failure{
+                        echo "========A execution failed========"
+                    }
+                }
+            }
+        }
+        post{
+            always{
+                echo "========always========"
+            }
+            success{
+                echo "========pipeline executed successfully ========"
+            }
+            failure{
+                echo "========pipeline execution failed========"
+            }
+        }
+    }
+
+}else {
+
+
+
 pipeline {
     agent any
 
@@ -69,4 +124,5 @@ pipeline {
             echo 'after failure'
         }
     }
+}
 }
