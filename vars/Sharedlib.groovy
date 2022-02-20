@@ -21,9 +21,9 @@ def call(names){
 
 
 
-  def runningBuilds =  Jenkins.instance.getView('All').getBuilds().findAll(){
-        it.getResult().equals(null)
-    }
+   def runningBuilds = Jenkins.instance.getItems().collect { job->
+        job.builds.findAll { it.getResult().equals(null) }
+    }.flatten()
 
     echo "${runningBuilds}"
 }
