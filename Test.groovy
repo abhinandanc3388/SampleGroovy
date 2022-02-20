@@ -14,7 +14,7 @@ if (currDate.equals(thirdDay)){
     flag = true
 }
 
-if (flag = true){
+if (flag == true){
 
     pipeline{
         agent{
