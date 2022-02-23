@@ -1,18 +1,11 @@
 package com.abhi.test
 
-import java.time.DayOfWeek
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.Month
-import java.time.temporal.TemporalAdjuster
-import java.time.temporal.TemporalAdjusters
-
-
-def flag=false
-
-def currDate = LocalDate.now()
-def thirdDay = currDate.with(TemporalAdjusters.dayOfWeekInMonth(3, DayOfWeek.SUNDAY));
-
-if (currDate.equals(thirdDay)){
-    flag = true
+def nthWeekdayOfMonth(int dayOfWeek, int month, int year, int week, TimeZone timeZone) {
+    Calendar calendar = Calendar.getInstance();
+    calendar.setTimeZone(timeZone);
+    calendar.set(Calendar.DAY_OF_WEEK, dayOfWeek);
+    calendar.set(Calendar.WEEK_OF_MONTH, week);
+    calendar.set(Calendar.MONTH, month);
+    calendar.set(Calendar.YEAR, year);
+    return calendar.getTime();
 }
